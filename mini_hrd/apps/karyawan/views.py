@@ -16,3 +16,12 @@ def karyawan_all(request):
         })
     return render(request, 'list.html',{'kr_list':kr_list})
     # return JsonResponse({'data':data})
+
+# Add
+# Detail
+
+
+
+# Update
+# Delete
+
