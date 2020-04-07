@@ -1,0 +1,14 @@
+<table style="border-color: coral;">
+    <tr>
+        <td>nama</td>
+        <td>alamat</td>
+        <td><button>add</button></td>
+    </tr>
+    {% for kr in kr_list %}
+    <tr>
+        <td>{{kr.name}}</td>
+        <td>{{kr.alamat}}</td>
+        <td><button>edit</button>  <button>delete</button></td>
+    </tr>
+    {% endfor %}
+</table>
