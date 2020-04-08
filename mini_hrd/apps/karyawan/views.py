@@ -44,14 +44,9 @@ class KaryawanForm(forms.Form):
     DIVISI_INSERTED = ()
     JABATAN_INSERTED = ()
     for div in Divisi.objects.all():
-        # print div
-        divExist = Divisi.objects.get(pk=div.id)
-        print divExist
         DIVISI_INSERTED = DIVISI_INSERTED + ((div.nama, div.nama),)
 
     for jab in Jabatan.objects.all():
-        # print jab
-        jabExist = Jabatan.objects.get(pk=jab.id)
         JABATAN_INSERTED = JABATAN_INSERTED + ((jab.nama, jab.nama),)
 
     nama = forms.CharField(
@@ -142,8 +137,9 @@ def karyawan_insert(request):
 # Detail
 def karyawan_detail(request, pk):
     # data = Karyawan.objects.all()
-    
-    return render(request, 'detail.html',{})
+    karyawan = Karyawan.objects.get(pk=pk)
+    print karyawan.alamat
+    return render(request, 'detail.html',{'dataKaryawan':karyawan})
     # return JsonResponse({'data':data})
 
 
