@@ -148,3 +148,7 @@ def karyawan_detail(request, pk):
 # Update - asdar
 # Delete
 
+def edit(request, id):
+    kr_data = Karyawan.objects.get(id=id)
+
+    return render(request,'edit.html',{'kr_data':kr_data})
