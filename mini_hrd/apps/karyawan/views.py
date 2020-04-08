@@ -4,7 +4,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from karyawan.models import Karyawan, Jabatan, Divisi
 from django import forms
+from django.forms import ModelForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def karyawan_all(request):
     # data = Karyawan.objects.all()
     # return HttpResponse("test")
@@ -68,13 +71,9 @@ class KaryawanForm(forms.Form):
         })
     )
     jenis_kelamin = forms.ChoiceField(
-        required=True,
-        widget=forms.RadioSelect,
         choices=JENIS_KELAMIN_CHOICES,
     )
     jenis_karyawan = forms.ChoiceField(
-        required=True,
-        widget=forms.RadioSelect,
         choices=JENIS_KARYAWAN_CHOICES,
     )
     divisi = forms.ChoiceField(
@@ -137,19 +136,7 @@ def karyawan_insert(request):
         'form':form,
 
     }
-    return render(request, 'add.html', context)
-
-def karyawan_update(request, pk):
-    karyawan_selected = Karyawan.objects.get(id=pk)
-    form = KaryawanForm(request.method == 'POST',instance=karyawan_selected)
-    if form.is_valid():
-        form.save()  
-        return redirect('/')          
-    context = {
-        'form':form,
-    }
-    return render(request, 'add.html', context)
-
+    return render(request, 'form.html', context)
 
 # Detail
 def karyawan_detail(request, pk):
@@ -167,9 +154,16 @@ def karyawan_delete(request, pk):
 
 
 # Update - asdar
-# Delete
+class KaryawanEditForm(forms.ModelForm): 
+    class Meta:
+        model = Karyawan
+        fields = '__all__'
+
 
 def edit(request, id):
-    kr_data = Karyawan.objects.get(id=id)
-
-    return render(request,'edit.html',{'kr_data':kr_data})
+    kr_data= Karyawan.objects.get(id=id)
+    form = KaryawanEditForm(request.POST or None, instance=kr_data)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    return render(request, 'form.html', {'form':form})

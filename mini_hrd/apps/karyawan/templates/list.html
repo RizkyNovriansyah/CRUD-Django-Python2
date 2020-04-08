@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block body %}
 <table style="border-color: coral;">
     <tr>
         <td>nama</td>
@@ -8,7 +10,8 @@
     <tr>
         <td>{{kr.name}}</td>
         <td>{{kr.alamat}}</td>
-        <td><button>edit</button>  <a href="/delete/{{kr.id}}">Delete</a></td>
+        <td><a href="{% url 'edit' kr.id %}">edit</a>  <a href="/delete/{{kr.id}}">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
+{% endblock %}
