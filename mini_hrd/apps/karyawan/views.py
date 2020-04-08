@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from karyawan.models import Karyawan, Jabatan, Divisi
 from django import forms
@@ -127,7 +127,8 @@ def karyawan_insert(request):
                 divisi=Divisi.objects.get(nama=form.cleaned_data["divisi"]),
             )
             print 'succedsaved'
-            karyawan.save()            
+            karyawan.save()  
+            return redirect('/')          
     context = {
         'form':form,
 
@@ -137,7 +138,7 @@ def karyawan_insert(request):
 # Detail
 def karyawan_detail(request, pk):
     # data = Karyawan.objects.all()
-    karyawan = Karyawan.objects.get(pk=pk)
+    karyawan = Karyawan.objects.get(id=pk)
     print karyawan.alamat
     return render(request, 'detail.html',{'dataKaryawan':karyawan})
     # return JsonResponse({'data':data})
