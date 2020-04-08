@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from karyawan.views import karyawan_all
+from karyawan.views import karyawan_all,karyawan_insert, karyawan_detail
 
 urlpatterns = [
     url(r'^$', karyawan_all, name='karyawan_all'),
+    url(r'^add',karyawan_insert, name='karyawan_insert'),
+    url(r'^detail/(?P<pk>\d+)/$',karyawan_detail, name='karyawan_detail'),
     url(r'^admin/', admin.site.urls),
 ]
