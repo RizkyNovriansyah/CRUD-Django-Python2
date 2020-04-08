@@ -10,7 +10,6 @@ def karyawan_all(request):
     # return HttpResponse("test")
     kr_list = []
     for kr in Karyawan.objects.all():
-        print kr.nama
         kr_list.append({
             'name' : kr.nama,
             'alamat' : kr.alamat,
@@ -26,10 +25,6 @@ class KaryawanForm(forms.Form):
     class Meta:
         model = Karyawan
         fields = []
-
-    if Karyawan:
-        print Karyawan
-        pass
 
     BIRTH_YEAR_CHOICES = ['1980', '1981', '1982']
     FAVORITE_COLORS_CHOICES = [
@@ -116,7 +111,6 @@ class KaryawanForm(forms.Form):
             "placeholder": "pemilik_rekening"
         })
     )
-    
 
 def karyawan_insert(request):
     form = KaryawanForm()
@@ -136,7 +130,7 @@ def karyawan_insert(request):
                 jabatan=Jabatan.objects.get(nama=form.cleaned_data["jabatan"]),
                 divisi=Divisi.objects.get(nama=form.cleaned_data["divisi"]),
             )
-            print 'succedsaved'
+            print 'succed saved'
             karyawan.save()  
             return redirect('/')          
     context = {
@@ -161,7 +155,6 @@ def karyawan_update(request, pk):
 def karyawan_detail(request, pk):
     # data = Karyawan.objects.all()
     karyawan = Karyawan.objects.get(id=pk)
-    print karyawan.alamat
     return render(request, 'detail.html',{'dataKaryawan':karyawan})
     # return JsonResponse({'data':data})
 
