@@ -22,6 +22,15 @@ def karyawan_all(request):
 # Add - rinop
 
 class KaryawanForm(forms.Form):
+    # , forms.ModelForm
+    class Meta:
+        model = Karyawan
+        fields = []
+
+    if Karyawan:
+        print Karyawan
+        pass
+
     BIRTH_YEAR_CHOICES = ['1980', '1981', '1982']
     FAVORITE_COLORS_CHOICES = [
         ('blue', 'Blue'),
@@ -135,6 +144,18 @@ def karyawan_insert(request):
 
     }
     return render(request, 'add.html', context)
+
+def karyawan_update(request, pk):
+    karyawan_selected = Karyawan.objects.get(id=pk)
+    form = KaryawanForm(request.method == 'POST',instance=karyawan_selected)
+    if form.is_valid():
+        form.save()  
+        return redirect('/')          
+    context = {
+        'form':form,
+    }
+    return render(request, 'add.html', context)
+
 
 # Detail
 def karyawan_detail(request, pk):
