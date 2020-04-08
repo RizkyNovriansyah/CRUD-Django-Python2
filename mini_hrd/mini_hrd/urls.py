@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from karyawan.views import karyawan_all
+from karyawan.views import karyawan_all,edit
 
 urlpatterns = [
     url(r'^$', karyawan_all, name='karyawan_all'),
+    url(r'^edit/(?P<id>\d+)/$', edit, name='edit'),
     url(r'^admin/', admin.site.urls),
 ]
