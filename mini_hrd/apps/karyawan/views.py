@@ -14,6 +14,7 @@ def karyawan_all(request):
         kr_list.append({
             'name' : kr.nama,
             'alamat' : kr.alamat,
+            'id' : kr.id,
         })
     return render(request, 'list.html',{'kr_list':kr_list})
     # return JsonResponse({'data':data})
@@ -143,6 +144,12 @@ def karyawan_detail(request, pk):
     return render(request, 'detail.html',{'dataKaryawan':karyawan})
     # return JsonResponse({'data':data})
 
+def karyawan_delete(request, pk):
+    # data = Karyawan.objects.all()
+    karyawan = Karyawan.objects.get(id=pk)
+    karyawan.delete()
+    return redirect('/')   
+    # return JsonResponse({'data':data})
 
 
 # Update - asdar
