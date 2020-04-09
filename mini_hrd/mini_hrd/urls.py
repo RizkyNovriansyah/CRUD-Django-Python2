@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from karyawan.views import karyawan_all,karyawan_insert, karyawan_detail, edit, karyawan_delete
+from karyawan.views import karyawan_all,karyawan_insert, karyawan_detail, edit, karyawan_delete, login_view, logout_view
 
 urlpatterns = [
     url(r'^$', karyawan_all, name='karyawan_all'),
     url(r'^add',karyawan_insert, name='karyawan_insert'),
-    url(r'^detail/(?P<pk>\d+)/$',karyawan_detail, name='karyawan_detail'),
-    url(r'^delete/(?P<pk>\d+)/$',karyawan_delete, name='karyawan_delete'),
-    url(r'^edit/(?P<id>\d+)/$', edit, name='edit'),
+    url(r'^detail/(?P<pk>\d+)',karyawan_detail, name='karyawan_detail'),
+    url(r'^delete/(?P<pk>\d+)',karyawan_delete, name='karyawan_delete'),
+    url(r'^edit/(?P<id>\d+).3gp', edit, name='edit'),
+    url(r'^login', login_view, name='login'),
+    url(r'^logout', logout_view, name='logout'),
     url(r'^admin/', admin.site.urls),
 ]

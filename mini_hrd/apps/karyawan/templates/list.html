@@ -1,14 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
 <table style="border-color: coral;">
     <tr>
         <td>nama</td>
         <td>alamat</td>
-        <td><a href="/add">Add</a></td>
+        <td><a href="{% url 'karyawan_insert' %}">Add</a></td>
     </tr>
     {% for kr in kr_list %}
     <tr>
         <td>{{kr.name}}</td>
         <td>{{kr.alamat}}</td>
-        <td><a href="/edit/2">edit</a>  <a href="/delete/{{kr.id}}">Delete</a></td>
+        <td><a href="{% url 'edit' kr.id %}">edit</a>  <a href="/delete/{{kr.id}}">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
+{% endblock %}

@@ -5,7 +5,12 @@ from django.http import HttpResponse, JsonResponse
 from karyawan.models import Karyawan, Jabatan, Divisi
 from django import forms
 from django.forms import ModelForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.template import RequestContext
 
+@login_required
 def karyawan_all(request):
     # data = Karyawan.objects.all()
     # return HttpResponse("test")
@@ -169,3 +174,19 @@ def edit(request, id):
         form.save()
         return redirect('/')
     return render(request, 'edit.html', {'form':form})
+
+def login_view(request):
+    if request.method == 'POST':
+        uname = request.POST.get('uname')
+        pswd = request.POST.get('psw')
+        user = authenticate(username=uname, password=pswd)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+    
+    return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'login.html')
+

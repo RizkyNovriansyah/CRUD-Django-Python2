@@ -1,0 +1,7 @@
+<html>
+    <body>
+        <h1>Hai {{ request.user }}</h1>
+        <a href="{% url 'logout' %}"> Logout </a>
+        {% block body %} {% endblock %}
+    </body>
+</html>
