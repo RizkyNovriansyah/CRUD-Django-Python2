@@ -5,6 +5,14 @@ from django.contrib import admin
 from karyawan.models import *
 
 # Register your models here.
+class WeatherAdmin (admin.ModelAdmin):
+    list_display = ['nama', 'ext_id']
+    list_filter = ()
+    search_fields = ['nama', 'ext_id']
+    list_per_page = 25
+
+admin.site.register(Weather, WeatherAdmin)
+
 class DivisiAdmin (admin.ModelAdmin):
     list_display = ['nama', 'keterangan']
     list_filter = ()

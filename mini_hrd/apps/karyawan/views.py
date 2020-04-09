@@ -2,15 +2,17 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from karyawan.models import Karyawan, Jabatan, Divisi
+from karyawan.models import Karyawan, Jabatan, Divisi, Weather
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 
+import requests
+
 @login_required
 def karyawan_all(request):
     # data = Karyawan.objects.all()
-    # return HttpResponse("test")
+    # return HttpR  esponse("test")
     kr_list = []
     for kr in Karyawan.objects.all():
         kr_list.append({
@@ -137,6 +139,33 @@ def karyawan_insert(request):
 
     }
     return render(request, 'form.html', context)
+
+def look_data_tes():
+    w_list = []
+    for w in Weather.objects.all():
+        w_list.append({
+            'nama' : w.nama,
+            'ext_id' : w.ext_id,
+        })
+    print w_list
+
+def inserting_data_tes():
+    sampleReq = requests.get('https://samples.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10&appid=b6907d289e10d714a6e88b30761fae22');
+    json = sampleReq.json()
+    list_weather = json['list']
+
+    for w in list_weather:
+        print w['name']
+        weather = Weather(
+            ext_id=w['id'],
+            nama=w['name'],
+            lng=w['coord']['lon'],
+            lar=w['coord']['lat'],
+            weather_state=w['main']['temp'],
+        )
+        weather.save()  
+    # Weather
+    # print json['cod']
 
 # Detail
 def karyawan_detail(request, pk):
