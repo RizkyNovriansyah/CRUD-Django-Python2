@@ -5,6 +5,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class Weather (models.Model):
+    ext_id = models.CharField(max_length=100)
+    nama = models.CharField(max_length=100)
+    lng = models.CharField(max_length=100)
+    lar = models.CharField(max_length=100)
+    weather_state = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.nama
+
 class Divisi (models.Model):
     nama = models.CharField(max_length=100)
     keterangan =models.TextField(blank=True)

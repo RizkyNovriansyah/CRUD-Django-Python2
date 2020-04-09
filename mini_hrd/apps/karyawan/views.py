@@ -2,18 +2,19 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from karyawan.models import Karyawan, Jabatan, Divisi
+from karyawan.models import Karyawan, Jabatan, Divisi, Weather
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
+import requests
 
 @login_required
 def karyawan_all(request):
     # data = Karyawan.objects.all()
-    # return HttpResponse("test")
+    # return HttpR  esponse("test")
     kr_list = []
     for kr in Karyawan.objects.all():
         kr_list.append({
@@ -74,13 +75,9 @@ class KaryawanForm(forms.Form):
         })
     )
     jenis_kelamin = forms.ChoiceField(
-        required=True,
-        widget=forms.RadioSelect,
         choices=JENIS_KELAMIN_CHOICES,
     )
     jenis_karyawan = forms.ChoiceField(
-        required=True,
-        widget=forms.RadioSelect,
         choices=JENIS_KARYAWAN_CHOICES,
     )
     divisi = forms.ChoiceField(
@@ -143,7 +140,34 @@ def karyawan_insert(request):
         'form':form,
 
     }
-    return render(request, 'add.html', context)
+    return render(request, 'form.html', context)
+
+def look_data_tes():
+    w_list = []
+    for w in Weather.objects.all():
+        w_list.append({
+            'nama' : w.nama,
+            'ext_id' : w.ext_id,
+        })
+    print w_list
+
+def inserting_data_tes():
+    sampleReq = requests.get('https://samples.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10&appid=b6907d289e10d714a6e88b30761fae22');
+    json = sampleReq.json()
+    list_weather = json['list']
+
+    for w in list_weather:
+        print w['name']
+        weather = Weather(
+            ext_id=w['id'],
+            nama=w['name'],
+            lng=w['coord']['lon'],
+            lar=w['coord']['lat'],
+            weather_state=w['main']['temp'],
+        )
+        weather.save()  
+    # Weather
+    # print json['cod']
 
 # Detail
 def karyawan_detail(request, pk):
@@ -166,14 +190,13 @@ class KaryawanEditForm(forms.ModelForm):
         model = Karyawan
         fields = '__all__'
 
-
 def edit(request, id):
     kr_data= Karyawan.objects.get(id=id)
     form = KaryawanEditForm(request.POST or None, instance=kr_data)
     if form.is_valid():
         form.save()
         return redirect('/')
-    return render(request, 'edit.html', {'form':form})
+    return render(request, 'form.html', {'form':form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -188,5 +211,5 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, 'login.html')
+    return redirect('login')
 
