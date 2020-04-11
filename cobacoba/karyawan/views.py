@@ -1,9 +1,15 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.shortcuts import render
+
 from django.contrib.auth.models import User, Group
+from karyawan.models import *
 from rest_framework import viewsets
 from rest_framework import permissions
-from quickstart.serializers import UserSerializer, GroupSerializer
+from karyawan.serializers import UserSerializer, GroupSerializer, KaryawanSerializer
 
+# Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -21,3 +27,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class KaryawanViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Karyawan.objects.all()
+    serializer_class = KaryawanSerializer
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)

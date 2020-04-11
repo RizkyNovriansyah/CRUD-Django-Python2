@@ -1,5 +1,8 @@
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
+
+from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -10,22 +13,22 @@ class Weather (models.Model):
     lar = models.CharField(max_length=100)
     weather_state = models.CharField(max_length=100)
 
-    # def __unicode__(self):
-    #     return self.nama
+    def __unicode__(self):
+        return self.nama
 
 class Divisi (models.Model):
     nama = models.CharField(max_length=100)
     keterangan =models.TextField(blank=True)
 
-    # def __unicode__(self):
-    #     return self.nama
+    def __unicode__(self):
+        return self.nama
 
 class Jabatan (models.Model):
     nama = models.CharField(max_length=100)
     keterangan = models.TextField(blank=True)
 
-    # def __unicode__(self):
-    #     return self.nama
+    def __unicode__(self):
+        return self.nama
 
 class Karyawan (models.Model):
     JENIS_KELAMIN_CHOICES = (
@@ -47,11 +50,11 @@ class Karyawan (models.Model):
     email = models.CharField(max_length=100, blank=True)
     no_rekening = models.CharField(max_length=100)
     pemilik_rekening = models.CharField(max_length=100)
-    divisi = models.ForeignKey(Divisi, on_delete=models.CASCADE,)
-    jabatan = models.ForeignKey(Jabatan, on_delete=models.CASCADE,)
+    divisi = models.ForeignKey(Divisi, null=True)
+    jabatan = models.ForeignKey(Jabatan, null=True)
 
-    # def __unicode__(self):
-    #     return self.nama
+    def __unicode__(self):
+        return self.nama
 
 class Akun (models.Model):
     JENIS_AKUN_CHOICES = (
@@ -59,9 +62,9 @@ class Akun (models.Model):
         ('admin', 'Administrator'),
     )
 
-    akun = models.ForeignKey(User, on_delete=models.CASCADE,)
-    karyawan = models.ForeignKey(Karyawan, on_delete=models.CASCADE,)
+    akun = models.ForeignKey(User)
+    karyawan = models.ForeignKey(Karyawan)
     jenis_akun = models.CharField(max_length=20, choices=JENIS_AKUN_CHOICES)
 
-    # def __unicode__(self):
-    #     return self.karyawan.nama
+    def __unicode__(self):
+        return self.karyawan.nama
