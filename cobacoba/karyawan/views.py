@@ -34,6 +34,7 @@ class KaryawanViewSet(viewsets.ModelViewSet):
     """
     queryset = Karyawan.objects.all()
     serializer_class = KaryawanSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
