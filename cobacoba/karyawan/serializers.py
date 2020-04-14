@@ -35,4 +35,4 @@ class KaryawanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Karyawan
-        fields = ['nama', 'alamat', 'jenis_kelamin', 'jenis_karyawan', 'no_telepon', 'email', 'no_rekening', 'pemilik_rekening', 'jabatan', 'divisi',];
+        fields = ['id','nama', 'alamat', 'jenis_kelamin', 'jenis_karyawan', 'no_telepon', 'email', 'no_rekening', 'pemilik_rekening', 'jabatan', 'divisi',];
